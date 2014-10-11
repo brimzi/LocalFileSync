@@ -3,9 +3,17 @@ import java.util.Map;
 import java.util.UUID;
 
 public class DataStoreProvider {
+	static Map <String,UserProfile> cachedProfiles;
+	public static Map <String,UserProfile> getUsers(){
+		if(cachedProfiles==null)
+		cachedProfiles=SqlLiteDatabase.getAllProfiles(); 
+		
+		return cachedProfiles;
+	}
 	
-	public static Map<String,char[]> getUsersFromdb(){
-		return null;
+	public static UserProfile getUser(String userName) {
+		// TODO Auto-generated method stub
+		return getUsers().get(userName);
 	}
 
 	public static String createNewSession(String userProfile) {
@@ -21,10 +29,11 @@ public class DataStoreProvider {
 	}
 
 	public static boolean isSessionRunning(String syncSessionId) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return SqlLiteDatabase.isSessionActive(syncSessionId);
 	}
 
+	
 	public static boolean cancelSession(String sessionId) {
 		// TODO perform any necessary clean up
 		return SqlLiteDatabase.closeSession(sessionId);
@@ -34,6 +43,8 @@ public class DataStoreProvider {
 		// TODO perform any necessary clean up
 		return SqlLiteDatabase.closeSession(sessionId);
 	}
+
+	
 	
 	
 

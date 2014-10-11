@@ -12,5 +12,13 @@ public class DatabaseSchema {
 		static final String COLUMN_TIMESTAMP="timestamp";
 		static final String COLUMN_STATUS="status";
 	}
+	
+	public static class Profiles{
+		static final String NAME="profiles";
+		static final String COLUMN_ID="id";
+		static final String COLUMN_USERPROFILE="userprofile";
+		static final String COLUMN_PASSWORD="password";
+		static final String COLUMN_FRIENDLY_NAME="friendlyname";
+	}
 
 }

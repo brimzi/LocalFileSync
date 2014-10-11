@@ -1,5 +1,6 @@
 package com.brimzi.app.filetransferpc.data;
 import java.sql.*;
+import java.util.Map;
 
 
 public class SqlLiteDatabase {
@@ -29,9 +30,16 @@ public class SqlLiteDatabase {
 				DatabaseSchema.Session.COLUMN_TIMESTAMP+" timestamp REAL, " + 
 				DatabaseSchema.Session.COLUMN_STATUS+" INTEGER)";
 		
+		String profiles_table_sql ="CREATE TABLE IF NOT EXISTS "+DatabaseSchema.Profiles.NAME+"(" +
+				DatabaseSchema.Profiles.COLUMN_ID+" INTEGER PRIMARY KEY  NOT NULL," +
+				DatabaseSchema.Profiles.COLUMN_USERPROFILE+" TEXT    NOT NULL, " + 
+				DatabaseSchema.Profiles.COLUMN_PASSWORD+" TEXT     NOT NULL, " + 
+				DatabaseSchema.Profiles.COLUMN_FRIENDLY_NAME+" timestamp REAL " + 
+				")";
 		try{
 			Statement st=conn.createStatement();
 			st.addBatch(session_table_sql);
+			st.addBatch(profiles_table_sql);
 			st.executeBatch();
 			rtVal=true;
 			st.close();
@@ -110,6 +118,41 @@ public class SqlLiteDatabase {
 		
 		
 		return rtVal;
+	}
+
+
+	public static boolean isSessionActive(String syncSessionId) {
+		boolean rtVal=false;
+		String query = "SELECT "+DatabaseSchema.Session.COLUMN_STATUS +" from "+
+				DatabaseSchema.Session.NAME +"WHERE " +DatabaseSchema.Session.COLUMN_SESSIONID+
+				" = '" +syncSessionId+"'";
+		Connection conn=getDbConnection();
+		try{
+		Statement st=conn.createStatement();
+		ResultSet res=st.executeQuery(query);
+		
+		if(!res.next()) rtVal=false;;
+		int status=res.getInt(DatabaseSchema.Session.COLUMN_STATUS);
+		
+		if(status== DatabaseSchema.Session.codes.SESSION_OPEN.ordinal());
+			rtVal=true;
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return rtVal;
+	}
+
+
+	public static Map <String,UserProfile> getAllProfiles() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
