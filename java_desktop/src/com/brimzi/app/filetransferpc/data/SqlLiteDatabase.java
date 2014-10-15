@@ -104,7 +104,7 @@ public class SqlLiteDatabase {
 			rtVal=true;
 			st.close();
 		}catch(SQLException e){
-			
+			e.printStackTrace();
 		}finally{
 			try{
 				conn.close();
