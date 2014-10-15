@@ -1,4 +1,4 @@
-package com.brimzi.app.filetransferpc;
+package file_transfer_pc_testclient;
 
 import org.alljoyn.bus.BusException;
 import org.alljoyn.bus.annotation.BusInterface;
@@ -14,7 +14,7 @@ import org.alljoyn.bus.annotation.Secure;
 @BusInterface(name = "com.brimzi.app.filetransferpc")
 @Secure
 public interface TransferMethodInterface {
-	
+
 	public enum StatusCode{
 		OK, // Positive response confirming operation was successful
 		ERROR,// General response indicating that an error occurred 
@@ -25,13 +25,13 @@ public interface TransferMethodInterface {
 	}
 	
 	@BusMethod
-	public String startSyncSession(String userProfile)throws BusException;
+	public String startSyncSession(String userProfile)throws BusException;;
 	
 	@BusMethod
-	public int cancelSyncSession(String syncSessionId)throws BusException;
+	public int cancelSyncSession(String syncSessionId)throws BusException;;
 	
 	@BusMethod
-	public int endSyncSession(String syncSessionId)throws BusException;
+	public int endSyncSession(String syncSessionId)throws BusException;;
 	
 }
 

@@ -1,7 +1,6 @@
 package com.brimzi.app.filetransferpc;
 
-import java.util.Map;
-import java.util.HashMap;
+
 
 import org.alljoyn.bus.AuthListener;
 

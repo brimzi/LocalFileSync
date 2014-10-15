@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/BrimziPortable/BrimziAll/BrimzisCase/Code/Alljoyn/alljoyn-14.06.00-win7x64vs2012-sdk/alljoyn-14.06.00-win7x64vs2012-sdk-dbg/java/jar/alljoyn.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/BrimziPortable/BrimziAll/BrimzisCase/Code/Alljoyn/alljoyn-14.06.00-win7x64vs2012-sdk/alljoyn-14.06.00-win7x64vs2012-sdk-dbg/java/docs/html/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/BrimziPortable/BrimziAll/BrimzisCase/Code/Alljoyn/alljoyn-14.06.00-win7x64vs2012-sdk/alljoyn-14.06.00-win7x64vs2012-sdk-dbg/java/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

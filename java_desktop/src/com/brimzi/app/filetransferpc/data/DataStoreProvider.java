@@ -4,15 +4,18 @@ import java.util.UUID;
 
 public class DataStoreProvider {
 	static Map <String,UserProfile> cachedProfiles;
-	public static Map <String,UserProfile> getUsers(){
-		if(cachedProfiles==null)
+	 static Map <String,UserProfile> getUsers(){
+		if(cachedProfiles==null){
 		cachedProfiles=SqlLiteDatabase.getAllProfiles(); 
 		
+		//TODO REMOVE THIS ONLY TESTING HERE
+		cachedProfiles.put("TestProfile", new UserProfile("TestProfile", "1234", "Test Profile"));
+		}
 		return cachedProfiles;
 	}
 	
 	public static UserProfile getUser(String userName) {
-		// TODO Auto-generated method stub
+		
 		return getUsers().get(userName);
 	}
 
@@ -25,7 +28,7 @@ public class DataStoreProvider {
 
 	public static boolean profileExists(String userProfile) {
 		//TODO we can cache the Profile object
-		return SqlLiteDatabase.getProfile(userProfile)!= null;
+		return getUsers().get(userProfile)!= null;
 	}
 
 	public static boolean isSessionRunning(String syncSessionId) {

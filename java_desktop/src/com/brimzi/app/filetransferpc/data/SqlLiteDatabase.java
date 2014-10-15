@@ -1,5 +1,6 @@
 package com.brimzi.app.filetransferpc.data;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -15,7 +16,6 @@ public class SqlLiteDatabase {
 	    } catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} 
-	    
 	    return c;
 	}
 	
@@ -67,8 +67,8 @@ public class SqlLiteDatabase {
 			PreparedStatement st=conn.prepareStatement(insertsql);
 			st.setString(1, userProfile);
 			st.setString(2, sessionId);
-			Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
-			st.setTimestamp(3, sqlDate);
+			long  date = new java.util.Date().getTime();
+			st.setLong(3, date);
 			st.setInt(4, DatabaseSchema.Session.codes.SESSION_OPEN.ordinal());
 			st.executeUpdate();
 			rtVal=true;
@@ -89,10 +89,7 @@ public class SqlLiteDatabase {
 	}
 
 
-	public static Object getProfile(String userProfile) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
 	public static boolean closeSession(String sessionId) {
@@ -102,7 +99,7 @@ public class SqlLiteDatabase {
 		Connection conn=getDbConnection();
 		try{
 			PreparedStatement st=conn.prepareStatement(insertsql);
-			st.setInt(4,DatabaseSchema.Session.codes.SESSION_CLOSED.ordinal());
+			st.setInt(1,DatabaseSchema.Session.codes.SESSION_CLOSED.ordinal());
 			st.executeUpdate();
 			rtVal=true;
 			st.close();
@@ -124,7 +121,7 @@ public class SqlLiteDatabase {
 	public static boolean isSessionActive(String syncSessionId) {
 		boolean rtVal=false;
 		String query = "SELECT "+DatabaseSchema.Session.COLUMN_STATUS +" from "+
-				DatabaseSchema.Session.NAME +"WHERE " +DatabaseSchema.Session.COLUMN_SESSIONID+
+				DatabaseSchema.Session.NAME +" WHERE " +DatabaseSchema.Session.COLUMN_SESSIONID+
 				" = '" +syncSessionId+"'";
 		Connection conn=getDbConnection();
 		try{
@@ -151,8 +148,31 @@ public class SqlLiteDatabase {
 
 
 	public static Map <String,UserProfile> getAllProfiles() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,UserProfile> rtVal=null;
+		String query = "SELECT * from "+ //hop we don't have more than 50 users for a local store
+				DatabaseSchema.Profiles.NAME ;
+		Connection conn=getDbConnection();
+		try{
+		Statement st=conn.createStatement();
+		ResultSet res=st.executeQuery(query);
+		rtVal=new HashMap<>();//TODO memory overhead a bit high(hash) but no problem since we have few users
+		while(res.next()) {
+			String name=res.getString(DatabaseSchema.Profiles.COLUMN_USERPROFILE);
+			String pwd=res.getString(DatabaseSchema.Profiles.COLUMN_PASSWORD);
+			String friendlyName=res.getString(DatabaseSchema.Profiles.COLUMN_FRIENDLY_NAME);
+			rtVal.put(name, new UserProfile(name, pwd, friendlyName));
+		}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return rtVal;
 	}
 
 

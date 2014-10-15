@@ -25,19 +25,19 @@ public class TransferMethodService implements TransferMethodInterface,BusObject 
 	
 
 	@Override
-	public StatusCode cancelSyncSession(String syncSessionId) {
+	public int cancelSyncSession(String syncSessionId) {
 		if(DataStoreProvider.isSessionRunning(syncSessionId)){
-			return StatusCode.SESSION_CLOSED;
+			return StatusCode.SESSION_CLOSED.ordinal();
 		}
-		return DataStoreProvider.cancelSession(syncSessionId)?StatusCode.OK:StatusCode.ERROR;
+		return DataStoreProvider.cancelSession(syncSessionId)?StatusCode.OK.ordinal():StatusCode.ERROR.ordinal();
 	}
 
 	@Override
-	public StatusCode endSyncSession(String syncSessionId) {
-		if(DataStoreProvider.isSessionRunning(syncSessionId)){
-			return StatusCode.SESSION_CLOSED;
+	public int endSyncSession(String syncSessionId) {
+		if(!DataStoreProvider.isSessionRunning(syncSessionId)){
+			return StatusCode.SESSION_CLOSED.ordinal();
 		}
-		return DataStoreProvider.endSyncSession(syncSessionId)?StatusCode.OK:StatusCode.ERROR;
+		return DataStoreProvider.endSyncSession(syncSessionId)?StatusCode.OK.ordinal():StatusCode.ERROR.ordinal();
 	}
 
 	

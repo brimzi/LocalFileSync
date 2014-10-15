@@ -67,10 +67,11 @@ public class SqlLiteDatabaseTest {
 		String select_sql="select "+DatabaseSchema.Profiles.COLUMN_USERPROFILE+" FROM "+DatabaseSchema.Profiles.NAME ;
 		ResultSet res=st.executeQuery(select_sql);
 		assert(res.next());
-		String resVal=res.getString(1);
-		
+		String resVal=res.getString(DatabaseSchema.Profiles.COLUMN_USERPROFILE);
 		assertEquals("Profile names differ",resVal,profile );
-		st.close();conn.close();
+		
+		st.close();
+		conn.close();
 	}
 
 }
