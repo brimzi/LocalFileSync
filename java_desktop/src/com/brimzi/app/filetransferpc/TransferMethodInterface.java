@@ -25,13 +25,24 @@ public interface TransferMethodInterface {
 	}
 	
 	@BusMethod
-	public String startSyncSession(String userProfile)throws BusException;
+	String startSyncSession(String userProfile)throws BusException;
 	
 	@BusMethod
-	public int cancelSyncSession(String syncSessionId)throws BusException;
+	int cancelSyncSession(String syncSessionId)throws BusException;
 	
 	@BusMethod
-	public int endSyncSession(String syncSessionId)throws BusException;
+	int endSyncSession(String syncSessionId)throws BusException;
+
+	/**
+	 * This will scan the store and compile a list of files currently present
+	 * @param userProfile
+	 * The profile id of the user
+	 * @return
+	 * A string specifying the files currently in storage. String Format- FilePath:Checksum|FilePath:Checksum
+	 * @throws BusException
+	 */
+	@BusMethod
+	String currentFiles(String userProfile) throws BusException;
 	
 }
 

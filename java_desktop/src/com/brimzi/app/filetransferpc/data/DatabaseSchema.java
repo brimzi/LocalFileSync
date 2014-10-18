@@ -20,5 +20,14 @@ public class DatabaseSchema {
 		static final String COLUMN_PASSWORD="password";
 		static final String COLUMN_FRIENDLY_NAME="friendlyname";
 	}
+	
+	public static class FilesMetadata{
+		static final String NAME="filesMetadata";
+		static final String COLUMN_ID="id";
+		static final String COLUMN_PATH="path";
+		static final String COLUMN_OWNER="ownerprofile";
+		static final String COLUMN_STORAGEID="filesMetadata";
+		static final String COLUMN_STORAGE_META="storagemeta";
+	}
 
 }

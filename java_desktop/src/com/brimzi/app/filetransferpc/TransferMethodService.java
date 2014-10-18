@@ -1,5 +1,6 @@
 package com.brimzi.app.filetransferpc;
 
+import org.alljoyn.bus.BusException;
 import org.alljoyn.bus.BusObject;
 
 import com.brimzi.app.filetransferpc.data.DataStoreProvider;
@@ -9,6 +10,11 @@ public class TransferMethodService implements TransferMethodInterface,BusObject 
 	
 	public TransferMethodService(){
 		
+	}
+	
+	@Override
+	public String currentFiles(String userProfile)throws BusException{
+		return DataStoreProvider.getAllFilesForUser(userProfile);
 	}
 
 	@Override
@@ -21,8 +27,6 @@ public class TransferMethodService implements TransferMethodInterface,BusObject 
 		
 		return  sessionId == null ?StatusCode.ERROR_CREATING_PROFILE.toString():sessionId;
 	}
-
-	
 
 	@Override
 	public int cancelSyncSession(String syncSessionId) {

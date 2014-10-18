@@ -1,17 +1,15 @@
 package com.brimzi.app.filetransferpc.data;
 import java.io.File;
 import java.nio.file.Files;
-
 import java.sql.*;
 
 import static org.junit.Assert.*;
-
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SqlLiteDatabaseTest {
-
+	static LocalDatabase localDatabase=new SqlLiteDatabase();
 	@BeforeClass
 	public static void setUp() throws Exception {
 		File db=new File(DatabaseSchema.DB_NAME+".db");
@@ -27,9 +25,9 @@ public class SqlLiteDatabaseTest {
 	
 	@Test
 	public void testCreateTables() {
-	 assertTrue("Table creation failed",SqlLiteDatabase.createTables());
+	 assertTrue("Table creation failed",localDatabase.createTables());
 	}
-//TODO you may wanna test other things like schema level stuff??
+//TODO Test the class instead not SQLite!!!! 
 	@Test
 	public void testSessionTable() throws SQLException {
 		Connection conn=SqlLiteDatabase.getDbConnection();
@@ -69,6 +67,42 @@ public class SqlLiteDatabaseTest {
 		assert(res.next());
 		String resVal=res.getString(DatabaseSchema.Profiles.COLUMN_USERPROFILE);
 		assertEquals("Profile names differ",resVal,profile );
+		
+		st.close();
+		conn.close();
+	}
+	
+	@Test
+	public void testfilesmetadataTable()throws SQLException{
+		Connection conn=SqlLiteDatabase.getDbConnection();
+		String path="TestPath",owner="TestOwner",storageid="TestStorageId",storageMeta="TestJson";
+		String insertion_sql =String.format("INSERT INTO %s(%s,%s,%s,%s) VALUES(?,?,?,?)",
+				DatabaseSchema.FilesMetadata.NAME,
+				DatabaseSchema.FilesMetadata.COLUMN_PATH,
+				DatabaseSchema.FilesMetadata.COLUMN_OWNER,
+				DatabaseSchema.FilesMetadata.COLUMN_STORAGEID,
+				DatabaseSchema.FilesMetadata.COLUMN_STORAGE_META);
+		
+		PreparedStatement st=conn.prepareStatement(insertion_sql);
+		st.setString(1, path);
+		st.setString(2, owner);
+		st.setString(3, storageid);
+		st.setString(4, storageMeta);
+		st.executeUpdate();
+		st.close();
+		
+		String select_sql=String.format("select * FROM %s ",DatabaseSchema.FilesMetadata.NAME);
+		Statement st2=conn.createStatement();
+		ResultSet res=st2.executeQuery(select_sql);
+		assert(res.next());
+		String resPath=res.getString(DatabaseSchema.FilesMetadata.COLUMN_PATH);
+		String resOwner=res.getString(DatabaseSchema.FilesMetadata.COLUMN_OWNER);
+		String resStorageid=res.getString(DatabaseSchema.FilesMetadata.COLUMN_STORAGEID);
+		String resstorageMeta=res.getString(DatabaseSchema.FilesMetadata.COLUMN_STORAGE_META);
+		assertEquals("path names differ",path,resPath);
+		assertEquals("owner names differ",owner,resOwner );
+		assertEquals("storage names differ",storageid,resStorageid );
+		assertEquals("storage names differ",storageMeta,resstorageMeta );
 		
 		st.close();
 		conn.close();

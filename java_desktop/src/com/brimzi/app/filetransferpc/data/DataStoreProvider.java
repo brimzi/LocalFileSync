@@ -4,12 +4,15 @@ import java.util.UUID;
 
 public class DataStoreProvider {
 	static Map <String,UserProfile> cachedProfiles;
+	static LocalDatabase localDatabase;
 	 static Map <String,UserProfile> getUsers(){
+		 localDatabase=new SqlLiteDatabase();//we can easily switch to another database here
+	 
 		if(cachedProfiles==null){
-		cachedProfiles=SqlLiteDatabase.getAllProfiles(); 
+		cachedProfiles=localDatabase.getAllProfiles(); 
 		
 		//TODO REMOVE THIS ONLY TESTING HERE
-		cachedProfiles.put("TestProfile", new UserProfile("TestProfile", "1234", "Test Profile"));
+		//cachedProfiles.put("TestProfile", new UserProfile("TestProfile", "1234", "Test Profile"));
 		}
 		return cachedProfiles;
 	}
@@ -23,7 +26,7 @@ public class DataStoreProvider {
 		// TODO Maybe check if this profile has any ongoing session/interrupted etc and act accordingly
 		String sessionId=UUID.randomUUID().toString();
 		
-		return SqlLiteDatabase.insertSession(userProfile,sessionId)? sessionId:null;
+		return localDatabase.insertSession(userProfile,sessionId)? sessionId:null;
 	}
 
 	public static boolean profileExists(String userProfile) {
@@ -33,21 +36,28 @@ public class DataStoreProvider {
 
 	public static boolean isSessionRunning(String syncSessionId) {
 		
-		return SqlLiteDatabase.isSessionActive(syncSessionId);
+		return localDatabase.isSessionActive(syncSessionId);
 	}
 
 	
 	public static boolean cancelSession(String sessionId) {
 		// TODO perform any necessary clean up
-		return SqlLiteDatabase.closeSession(sessionId);
+		return localDatabase.closeSession(sessionId);
 	}
 
 	public static boolean endSyncSession(String sessionId) {
 		// TODO perform any necessary clean up
-		return SqlLiteDatabase.closeSession(sessionId);
+		return localDatabase.closeSession(sessionId);
 	}
 
-	
+	public static boolean saveFile(String path,String owner){
+		return false;
+	}
+
+	public static String getAllFilesForUser(String userProfile) {
+		String files= localDatabase.getFilesData(userProfile);
+		return files;
+	}
 	
 	
 

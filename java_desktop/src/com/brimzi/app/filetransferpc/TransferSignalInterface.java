@@ -8,7 +8,7 @@ import org.alljoyn.bus.annotation.Secure;
 @Secure
 public interface TransferSignalInterface {
 	@BusSignal
-	public void currentFiles(String jsonStringFiles);
+	public void currentFiles(String sessionId,String jsonStringFiles);
 	
 	@BusSignal
 	public void filesToUpload(String sessionId,String jsonStringFiles);
