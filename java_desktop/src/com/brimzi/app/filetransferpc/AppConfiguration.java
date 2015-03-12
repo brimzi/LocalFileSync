@@ -7,6 +7,16 @@ public class AppConfiguration {
 		return null;
 	}
 
+	public static String getServerReqRepPort() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String getServerBinDataPort() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

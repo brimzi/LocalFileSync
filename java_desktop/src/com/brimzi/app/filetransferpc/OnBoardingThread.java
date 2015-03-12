@@ -7,13 +7,13 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class OnBoarding extends Thread {
+public class OnBoardingThread extends Thread {
 	private static final int BUFF_SIZE = 512;
 	DatagramSocket socket;
 	AppStateProvider app;
 	
 
-	public OnBoarding(AppStateProvider app) {
+	public OnBoardingThread(AppStateProvider app) {
 		this.app=app;
 	}
 
@@ -43,7 +43,7 @@ public class OnBoarding extends Thread {
 			}
 
 		} catch (SocketException | UnknownHostException e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

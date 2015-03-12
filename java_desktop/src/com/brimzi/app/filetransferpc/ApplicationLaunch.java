@@ -22,14 +22,21 @@ public class ApplicationLaunch implements AppStateProvider {
 
 	private void run() throws InterruptedException {
 		// start threads
-
+		OnBoardingThread onboard=new OnBoardingThread(this);
+		onboard.start();
+		
+		Server server=new Server(this);
+		server.start();
+		
+		
 		// wait
 		synchronized (this) {
 			while (appState != AppState.APP_STATE_SHUTDOWN) {
 				wait();
 			}
 		}
-
+		
+		
 		// cleanup
 
 	}
