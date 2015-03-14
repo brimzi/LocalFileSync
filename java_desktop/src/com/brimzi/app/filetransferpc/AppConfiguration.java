@@ -17,6 +17,11 @@ public class AppConfiguration {
 		return null;
 	}
 
+	public static String getLocalDataDirectory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

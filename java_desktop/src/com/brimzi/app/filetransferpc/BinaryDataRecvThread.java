@@ -2,7 +2,10 @@ package com.brimzi.app.filetransferpc;
 
 import org.zeromq.ZMQ;
 
+import com.brimzi.app.filetransferpc.data.DataStoreProvider;
+
 public class BinaryDataRecvThread extends Thread{
+
 
 	private ZMQ.Context context;
 	private ZMQ.Socket socket;
@@ -19,17 +22,31 @@ public class BinaryDataRecvThread extends Thread{
 			//receive data here
 			byte[] data =socket.recv();
 			
-			//process or delegate kaya
-			processData(data);
+			DataMessage dataMsg=DataMessage.newDataMessage(data);
 			
-		
+			if(data==null)
+				continue;
+			//process 
+			boolean done=processData(dataMsg);
+			
+			if(done){
+				//we are happy
+			}
+			
 		}
 		
 		socket.close();
 	}
 
-	private void processData(byte[] data) {
+	
+
+	private boolean processData(DataMessage data) {
 		// TODO save or buffer ,most likely fill will be spit into parts while may arrive in an unordered manner
 		
+		return DataStoreProvider.saveFile(data);
 	}
+
+	
+
+	
 }

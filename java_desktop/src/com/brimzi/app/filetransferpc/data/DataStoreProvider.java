@@ -1,6 +1,12 @@
 package com.brimzi.app.filetransferpc.data;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
+
+import com.brimzi.app.filetransferpc.AppConfiguration;
+import com.brimzi.app.filetransferpc.DataMessage;
 
 public class DataStoreProvider {
 	static Map <String,UserProfile> cachedProfiles;
@@ -57,6 +63,36 @@ public class DataStoreProvider {
 	public static String getAllFilesForUser(String userProfile) {
 		String files= localDatabase.getFilesData(userProfile);
 		return files;
+	}
+
+	public static boolean  saveFile(DataMessage datamessage) {
+		
+		FileOutputStream outputStream=null;
+		String fileFullName=getFileFullName(datamessage.getFileName());
+		try {
+			outputStream=new FileOutputStream(fileFullName);
+			outputStream.write(datamessage.getData());
+			outputStream.close();
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				if(outputStream!=null)
+				outputStream.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return false;
+		}
+		
+		
+	}
+
+	private static String getFileFullName( String fileName) {
+		String dataDirectory=AppConfiguration.getLocalDataDirectory();
+		return dataDirectory+"/"+fileName;
 	}
 	
 	

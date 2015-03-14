@@ -31,7 +31,7 @@ public class Server extends Thread{
 			reqRepSocket.send(rep);
 			
 		}
-		reqRepSocket.close();
+		
 		//TODO:You need to tell you children its time to shut down
 		dataRecThread.interrupt();
 		try {
@@ -54,14 +54,21 @@ public class Server extends Thread{
 		String[] msgParts=msg.split(UtilityClass.MESSAGE_DELIMETTER);
 		String rep=null;
 		switch(msgParts[0]){
-		
+		case CommConstants.CLOSE_SESSION:
+			
+			break;
+			
+		case CommConstants.NEW_USER_CREATION:
+			
+			break;
 		case CommConstants.INIT_SESSION :
 			
 			break;
 			
-		case CommConstants.CLOSE_SESSION:
+		case CommConstants.LOGIN:
 			
 			break;
+		
 			
 		default:
 		
