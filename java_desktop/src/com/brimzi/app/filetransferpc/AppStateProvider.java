@@ -6,4 +6,8 @@ enum AppState{
 }
 public interface AppStateProvider {
 	 AppState getApplicationState();
+	 
+	 void shudDown();
+	 
+	 
 }

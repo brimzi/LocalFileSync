@@ -17,6 +17,10 @@ public class DataMessage implements Serializable{
 	private String sessionID;
 	private byte[] data;
 	
+	private DataMessage(){}
+	public static DataMessage newBlankDataMessage(){
+		return new DataMessage();
+	}
 	public static DataMessage newDataMessage(byte[] data){
 		ByteArrayInputStream byteIn=new ByteArrayInputStream(data);
 		ObjectInputStream objInput;
@@ -45,5 +49,21 @@ public class DataMessage implements Serializable{
 	public byte[] getData() {
 		
 		return data;
+	}
+	
+	public void setFileName(String name){
+		 this.fileName=name;
+	}
+
+	public void setDataSize(int size){
+		this.dataSize=size;
+	}
+	
+	public void setSessionID(String session){
+		 this.sessionID=session;
+	}
+	public void setData(byte[] data) {
+		
+		this.data=data;;
 	}
 }

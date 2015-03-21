@@ -1,5 +1,5 @@
 package com.brimzi.app.filetransferpc.data;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -69,8 +69,12 @@ public class DataStoreProvider {
 		
 		FileOutputStream outputStream=null;
 		String fileFullName=getFileFullName(datamessage.getFileName());
+		File file=new File(fileFullName);
+		
+		
 		try {
-			outputStream=new FileOutputStream(fileFullName);
+			//file.createNewFile();
+			outputStream=new FileOutputStream(file);
 			outputStream.write(datamessage.getData());
 			outputStream.close();
 			return true;

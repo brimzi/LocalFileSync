@@ -23,10 +23,15 @@ public class ApplicationLaunch implements AppStateProvider {
 	private void run() throws InterruptedException {
 		// start threads
 		OnBoardingThread onboard=new OnBoardingThread(this);
+		onboard.setDaemon(true);
 		onboard.start();
 		
 		Server server=new Server(this);
+		server.setDaemon(true);
 		server.start();
+		
+		InteractionThread interaction=new InteractionThread(this);
+		interaction.start();
 		
 		
 		// wait
@@ -35,14 +40,21 @@ public class ApplicationLaunch implements AppStateProvider {
 				wait();
 			}
 		}
+		System.out.println("Shutting down.........");
+		server.interrupt();
+		onboard.interrupt();
+		server.join(5000);
 		
 		
 		// cleanup
+		System.out.println("Goodbye!");
 
 	}
 
-	synchronized void shudDown() {
+	@Override
+	public synchronized void shudDown() {
 		appState = AppState.APP_STATE_SHUTDOWN;
+		notify();
 	}
 
 	@Override

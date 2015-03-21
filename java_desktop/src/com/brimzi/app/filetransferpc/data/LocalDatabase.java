@@ -47,7 +47,11 @@ interface LocalDatabase {
 	 */
 	boolean insertFilesMetadata(String owner,String path,String storageId,String storageMetadata);
 	
-	
+	/*
+	 * @param userProfile
+	 * @return 
+	 * 	files data
+	 */
 	String getFilesData(String userProfile);
 	 
 }

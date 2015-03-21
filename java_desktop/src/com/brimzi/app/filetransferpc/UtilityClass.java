@@ -1,5 +1,7 @@
 package com.brimzi.app.filetransferpc;
 
+import java.nio.charset.StandardCharsets;
+
 public class UtilityClass {
 
 	public static final Object FILE_ENTRY_DELIMITER = "|";
@@ -11,6 +13,6 @@ public class UtilityClass {
 	}
 	
 	public static String DeserializeBytes(byte[] bytes){
-		return new String(bytes);
+		return new String(bytes,StandardCharsets.UTF_8);
 	}
 }

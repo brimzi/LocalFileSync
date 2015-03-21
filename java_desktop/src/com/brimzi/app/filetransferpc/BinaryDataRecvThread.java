@@ -11,12 +11,14 @@ public class BinaryDataRecvThread extends Thread{
 	private ZMQ.Socket socket;
 	public  BinaryDataRecvThread(ZMQ.Context context){
 		this.context=context;
+		this.setName(OnBoardingThread.class.getName());
+		
 	}
 	
 	@Override
 	public void run(){
 		socket= context.socket(ZMQ.PULL);
-		socket.bind("tcp://*:"+AppConfiguration.getServerBinDataPort());
+		socket.bind("tcp://*:"+AppConfiguration.getServerBinDataPort());//TODO we don't need a static port
 		
 		while(!Thread.currentThread().isInterrupted()){
 			//receive data here
@@ -31,10 +33,10 @@ public class BinaryDataRecvThread extends Thread{
 			
 			if(done){
 				//we are happy
+				System.out.println("Received and processed file: "+dataMsg.getFileName());
 			}
 			
 		}
-		
 		socket.close();
 	}
 
@@ -42,7 +44,6 @@ public class BinaryDataRecvThread extends Thread{
 
 	private boolean processData(DataMessage data) {
 		// TODO save or buffer ,most likely fill will be spit into parts while may arrive in an unordered manner
-		
 		return DataStoreProvider.saveFile(data);
 	}
 

@@ -6,20 +6,22 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 public class OnBoardingThread extends Thread {
 	private static final int BUFF_SIZE = 512;
 	DatagramSocket socket;
 	AppStateProvider app;
-	
+	final static boolean debug=true;
 
 	public OnBoardingThread(AppStateProvider app) {
 		this.app=app;
+		this.setName(OnBoardingThread.class.getName());
 	}
 
 	public void run() {
 		// read config
-		int port = 8888;
+		int port =AppConfiguration.getOnBoardingPort();
 		// open port
 		try {
 			socket = new DatagramSocket(port, InetAddress.getByName("0.0.0.0"));
@@ -39,7 +41,8 @@ public class OnBoardingThread extends Thread {
 				int fromPort=packet.getPort();
 
 				processRequest(message,from,fromPort,socket);
-
+				if(debug)
+					System.out.println("Just onboarded "+from);
 			}
 
 		} catch (SocketException | UnknownHostException e) {
@@ -56,7 +59,8 @@ public class OnBoardingThread extends Thread {
 
 	private void processRequest(String message,InetAddress fromAdd,int fromPort,DatagramSocket socket) throws IOException {
 		String reply = AppConfiguration.getServerConnAddress();
-		byte[] dataToSend=reply.getBytes();
+		//String reply = AppConfiguration.getServerBinDataPort();//TODO uncomment above
+		byte[] dataToSend=reply.getBytes(StandardCharsets.UTF_8);
 		DatagramPacket sendPacket = new DatagramPacket(dataToSend,dataToSend.length,fromAdd,fromPort);
 		socket.send(sendPacket);
 	}
