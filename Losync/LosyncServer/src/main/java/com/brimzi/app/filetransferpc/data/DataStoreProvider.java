@@ -83,7 +83,7 @@ public class DataStoreProvider {
 			e.printStackTrace();
 			try {
 				if(outputStream!=null)
-				outputStream.close();
+                                    outputStream.close();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

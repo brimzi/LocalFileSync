@@ -19,6 +19,7 @@ public class OnBoardingThread extends Thread {
 		this.setName(OnBoardingThread.class.getName());
 	}
 
+        @Override
 	public void run() {
 		// read config
 		int port =AppConfiguration.getOnBoardingPort();
