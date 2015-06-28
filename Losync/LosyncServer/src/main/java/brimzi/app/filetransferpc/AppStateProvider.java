@@ -1,4 +1,4 @@
-package com.brimzi.app.filetransferpc;
+package brimzi.app.filetransferpc;
 
 enum AppState{
 	APP_STATE_RUNNING,

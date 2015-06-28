@@ -1,6 +1,6 @@
-package com.brimzi.app.filetransferpc;
+package brimzi.app.filetransferpc;
 
-import com.brimzi.app.filetransferpc.network.NetworkUtility;
+import brimzi.app.filetransferpc.network.NetworkUtility;
 import java.io.IOException;
 
 public class AppConfiguration {

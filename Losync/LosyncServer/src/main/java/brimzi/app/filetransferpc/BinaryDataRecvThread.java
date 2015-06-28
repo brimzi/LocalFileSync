@@ -1,8 +1,8 @@
-package com.brimzi.app.filetransferpc;
+package brimzi.app.filetransferpc;
 
 import org.zeromq.ZMQ;
 
-import com.brimzi.app.filetransferpc.data.DataStoreProvider;
+import brimzi.app.filetransferpc.data.DataStoreProvider;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

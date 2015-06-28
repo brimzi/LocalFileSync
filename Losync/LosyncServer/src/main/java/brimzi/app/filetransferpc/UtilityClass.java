@@ -1,4 +1,4 @@
-package com.brimzi.app.filetransferpc;
+package brimzi.app.filetransferpc;
 
 import java.nio.charset.StandardCharsets;
 

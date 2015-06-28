@@ -1,12 +1,12 @@
-package com.brimzi.app.filetransferpc.data;
+package brimzi.app.filetransferpc.data;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
-import com.brimzi.app.filetransferpc.AppConfiguration;
-import com.brimzi.app.filetransferpc.DataMessage;
+import brimzi.app.filetransferpc.AppConfiguration;
+import brimzi.app.filetransferpc.DataMessage;
 
 public class DataStoreProvider {
 	static Map <String,UserProfile> cachedProfiles;

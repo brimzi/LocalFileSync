@@ -1,4 +1,4 @@
-package com.brimzi.app.filetransferpc.data;
+package brimzi.app.filetransferpc.data;
 
 public class UserProfile {
 	private String username, pwd, FriendlyName;

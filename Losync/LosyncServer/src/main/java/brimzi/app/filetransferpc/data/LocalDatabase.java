@@ -1,4 +1,4 @@
-package com.brimzi.app.filetransferpc.data;
+package brimzi.app.filetransferpc.data;
 
 import java.util.Map;
 

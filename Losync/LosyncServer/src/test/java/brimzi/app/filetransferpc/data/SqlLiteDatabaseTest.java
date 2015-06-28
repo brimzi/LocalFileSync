@@ -1,4 +1,7 @@
-package com.brimzi.app.filetransferpc.data;
+package brimzi.app.filetransferpc.data;
+import brimzi.app.filetransferpc.data.DatabaseSchema;
+import brimzi.app.filetransferpc.data.SqlLiteDatabase;
+import brimzi.app.filetransferpc.data.LocalDatabase;
 import java.io.File;
 import java.nio.file.Files;
 import java.sql.*;

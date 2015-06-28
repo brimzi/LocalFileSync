@@ -1,4 +1,4 @@
-package com.brimzi.app.filetransferpc;
+package brimzi.app.filetransferpc;
 
 public class ApplicationLaunch implements AppStateProvider {
 

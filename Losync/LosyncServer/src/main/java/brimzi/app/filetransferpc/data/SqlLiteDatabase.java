@@ -1,10 +1,10 @@
-package com.brimzi.app.filetransferpc.data;
+package brimzi.app.filetransferpc.data;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.brimzi.app.filetransferpc.UtilityClass;
+import brimzi.app.filetransferpc.UtilityClass;
 
 public class SqlLiteDatabase implements LocalDatabase {
 
