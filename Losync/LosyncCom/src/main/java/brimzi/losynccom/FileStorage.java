@@ -7,7 +7,7 @@ package brimzi.losynccom;
 
 /**
  * 
- * Not thread safe
+ * 
  * @author brimzi
  */
 public interface FileStorage {
