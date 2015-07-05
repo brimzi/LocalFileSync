@@ -43,7 +43,7 @@ public class OnBoardingThread extends Thread {
 
 				processRequest(message,from,fromPort,socket);
 				if(debug)
-					System.out.println("Just onboarded "+from);
+                                    System.out.println("Just onboarded "+from);
 			}
 
 		} catch (SocketException | UnknownHostException e) {

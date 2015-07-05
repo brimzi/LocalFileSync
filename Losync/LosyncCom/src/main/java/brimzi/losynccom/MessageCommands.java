@@ -11,7 +11,7 @@ package brimzi.losynccom;
  */
 public class MessageCommands {
     
-    public static final String GET_FILE ="getf";
+    public static final String GET_FILE ="gf";
     public static final byte END=-1;
     
 }

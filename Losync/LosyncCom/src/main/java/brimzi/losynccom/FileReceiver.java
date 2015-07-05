@@ -5,6 +5,7 @@
  */
 package brimzi.losynccom;
 
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zeromq.ZMQ;
@@ -28,28 +29,28 @@ public class FileReceiver {
         Runtime.getRuntime().addShutdownHook(new Thread(()->{
             socket.close();
         }));
+        
     }
 
     public void recAndSaveFile(FileMeta file) throws Exception {
-        int offset = 0;
+        
         int maxPieceSize = getmaxPieceSize();//in bytes
         int piecesInAdvance = getPiecesInAdvance(maxPieceSize);
-        boolean start=beginFileTransfer(file.getName(),file.getSize());
-        if(!start){
+        FileSession session=beginFileTransfer(file);
+        
+        if(Objects.isNull(session)){
             throw new Exception("Cannot begin the file transfer");//TODO: define appropriate exception
         }
         
         while (true) {
-            while (piecesInAdvance > 0) {
-                socket.sendMore(MessageCommands.GET_FILE);
-                //socket.sendMore(file.getName);//if multiple clients are connected
-                socket.sendMore(Integer.toString(offset));
-                socket.send(Integer.toString(maxPieceSize));
-                offset += maxPieceSize;
+            while (piecesInAdvance > 0 && session.moreToRequest()) {
+                session.requestPiece();
                 piecesInAdvance--;
             }
 
-            byte[] piece = socket.recv();
+            int offset=session.getExpectedOffset();
+            byte[] piece = session.receivePiece();
+            
             
             if(piece.length==1 && piece[0]==MessageCommands.END){
                 //byte[] checksum = socket.recv();we should check that we have a valid file
@@ -72,8 +73,9 @@ public class FileReceiver {
         return storageProvider.addPiece(offset,piece);
     }
 
-    private boolean beginFileTransfer(String filename,int size) {
-        return storageProvider.initFile(filename,size);
+    private FileSession beginFileTransfer(FileMeta file) {
+        //storageProvider.initFile(filename,size);
+        return null;
     }
 
     private void commitFile() {
