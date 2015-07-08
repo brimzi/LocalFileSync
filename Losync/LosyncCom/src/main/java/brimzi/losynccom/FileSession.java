@@ -14,7 +14,7 @@ import org.zeromq.ZMQ;
 class FileSession {
 
     private final ZMQ.Socket socket;
-    private int offset;
+    private int reqOffset;
     private final int maxPieceSize;
     private final String filename;
     private final int size;
@@ -33,14 +33,14 @@ class FileSession {
 
         socket.sendMore(MessageCommands.GET_FILE);
         //socket.sendMore(file.getName);//if multiple clients are connected
-        socket.sendMore(Integer.toString(offset));
+        socket.sendMore(Integer.toString(reqOffset));
         socket.send(Integer.toString(maxPieceSize));
-        offset += maxPieceSize;
+        reqOffset += maxPieceSize;
     }
 
     boolean moreToRequest() {
         
-       return offset< size;
+       return reqOffset< size;
     }
 
     byte[] receivePiece() {

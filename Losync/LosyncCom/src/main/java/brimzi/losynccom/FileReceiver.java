@@ -42,7 +42,7 @@ public class FileReceiver {
             throw new Exception("Cannot begin the file transfer");//TODO: define appropriate exception
         }
         
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             while (piecesInAdvance > 0 && session.moreToRequest()) {
                 session.requestPiece();
                 piecesInAdvance--;
